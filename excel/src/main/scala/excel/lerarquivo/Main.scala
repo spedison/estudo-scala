@@ -16,7 +16,7 @@ case class DepConta (nome:String, contagem:Int){}
 object Main {
 
   def main(args: Array[String]): Unit = {
-    main2(Array("/home/edisonribeiroaraujo/Documentos/dados-para-processar/xls-exemplos/FONTE_Orgaos_20191119.xlsx"))
+    main2(Array("/mnt/dados/git/estudo-scala/arquivos/FONTE_Orgaos_20191119.xlsx"))
   }
 
   def main2(args: Array[String]): Unit = {
