@@ -4,6 +4,8 @@ version := "0.1"
 
 scalaVersion := "2.12.13"
 
+description := "Projeto para aprender Scala com o projetto de processamento de algebra linear com Breeze"
+
 
 // Bibliotecas de Algebra linear.... Tipo Blas.
 // https://mvnrepository.com/artifact/org.scalanlp/breeze

@@ -9,26 +9,12 @@ description := "Projeto com soluções do URI ON LINE JUDGE e alguns exercícios
 resolvers +=  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 resolvers += "Artima Maven Repository" at "https://repo.artima.com/releases"
 
-
-
-// libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.7"
 // https://mvnrepository.com/artifact/org.scalactic/scalactic
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.7"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.7" % "test"
 
-// libraryDependencies +="org.apache.poi" % "poi" % "4.0.0"
-// libraryDependencies +="org.apache.poi" % "poi-ooxml" % "4.0.0"
-
-// https://mvnrepository.com/artifact/org.projectlombok/lombok
-libraryDependencies += "org.projectlombok" % "lombok" % "1.18.20" % "provided"
 
 
-
-// Colocar a bilioteca do Spark para leitura de DataSets.
-// https://spark.apache.org/downloads.html
-// https://spark.apache.org/docs/latest/index.html
-// https://gist.github.com/DenysNunes/e0f17c82d32c8c13b064
-// https://github.com/arunma/ScalaDataAnalysisCookbook/tree/master/chapter1-spark-csv/
 
 
 
