@@ -1,0 +1,503 @@
+========= Strings formatadas ===========
+
+s"O valor de PI = ${PI} e PI ao quadrado é ${PI * PI} $PI"
+
+f"Hello, $name%s. sua altura é $height%2.2f"
+
+Aspas Triplas
+-------------
+""" aqui tudo que for colocado não é escapado, por exemplo um json ou xml.
+{"name":"james"}
+"""
+
+
+Tem vários valores para representar o "Vazio" :
+
+: null      => Igual ao null do Java
+            => Reference types podem ser nulos mas Value Types não podem ( Exemplo val z : Int = null // Não Pode )
+
+: Null      => é um trait, não é um valor. Ele é o tipo do null.
+
+: Nothing   => é um trait, não é um valor, é um tipo. Nunca pode ser instanciado e extende qualquer coisa.
+        val emptyList = List[Nothing]()
+
+: Nil       => Valor especial associado a uma lista vazia.
+        Singleton instance. List[Nothing]
+        val someList = List(1,3,4,5,6)
+        var iterList = someList
+        while (iterList != Nil) {
+            print(iterList.head)
+            iterList = iterList.tail
+        }
+
+: None      => Valor especial associado ao Option. Representa a ausência do valor.
+  def fraction (n1:Double, n2:Double): Option[Double] = {
+    if (n2 == 0.0) None
+    else Option(n1/n2)
+  }
+
+: Unit      => Usado como o void do Java.
+
+
+Any
+    AnyVal e AnyRef
+        Nothing
+    AnyVal
+        Int
+        Double
+        Short
+    AnyRef
+        Null
+            null
+
+Type Operations
+
+asInstanceOf   => converte de uma forma não segura uma classe em outra
+    123.asInstanceOf[Long]    -> Força casting Int para Long .. OK!
+    "123".asInstanceOf[Long]  -> Força casting de String para Long ... ERRO!!!
+
+isInstanceOf   => retorna um booleano referente a checagem do Tipo
+    123.isInstanceOf[Int]  => retorna true.
+    123L.isInstalceOf[Double] => retorna false
+    // Somente pode ser usado Any, AnyRef.
+    // Não pode ser usado Null, AnyVal
+
+to<Type>       => converte a classe em tipos diretamente permitidos
+    123.toLong
+    123.toString
+    "123".toLong
+    "abc".toDouble => Cuidado!! Erro de NumberFormatException.
+
+getClass       => pega a instância de classe utilizada.
+scala> 123.getClass()
+res19: Class[Int] = int
+
+
+scala> List(1,2,3,4).getClass
+res20: Class[_ <: List[Int]] = class scala.collection.immutable.$colon$colon
+
+
+
+===== ==== Statements =======
+
+Pequenas unidades de código
+val rad = 10
+val area = { val PI = 3.14; PI * rad * rad }
+print area
+
+{} -> é uma bloco de expressão ou expression block.
+      ultima expressão do bloco retorna o valor.
+
+if / else     - igual ao  (Mas no Scala é chamado de Expressões e não de Statements como Java, C#...
+
+for / loops   - loops mas sem o while no java
+
+match         - como o "case/switch" no java, mas ... mais poderoso
+                Podemos usar condições simples (valores) ou tipos
+val pode ser inicializado pelo match
+
+val typeOfDay = dayOfWeek match {
+  case "Monday" => "Manic Monday"
+  case "Sunday" => "Sleepy Sunday"
+}
+
+Se nenhum caso bater... ele lança exceção Scala.MatchError.
+
+Podemos usar o operador or "|" no match
+
+val typeOfDay = dayOfWeek match {
+  case "Monday" => "Manic Monday"
+  case "Sunday" | "Saturday"=> "Sleepy Sunday"
+  case "Tuesday" | "Wednesday" | "Thursday" | "Friday" => "Other working day"
+}
+
+Podemos usar uma variável e aplicar ela a um if
+
+val typeOfDay = dayOfWeek match {
+  case "Monday" => "Manic Monday"
+  case "Sunday" => "Sleepy Sunday"
+  case someOtherDay if someOtherDay.endWith("Day") && otherCondition => "Mais um dia..."
+}
+
+Para capturar o 'else' do match usar o "_" ou nome de uma variável como binding.
+
+val typeOfDay = dayOfWeek match {
+  case "Monday" => "Manic Monday"
+  case "Sunday" => "Sleepy Sunday"
+  case someOtherDay  => {
+    print(s"Escolhido $someOtherDay")
+    someOtherDay
+  }
+}
+
+Se for "FriDay" aparecerá "Escolhido FriDay". Não lançará a Exceção scala.MatchError.
+
+var teste:String = "1"
+val numero = teste match {
+    case "1" => "um"
+    case "2" => "dois"
+    case "3" => "tres"
+    case _ => s"Outro valor: $teste"
+}
+
+Usando match para criar objetos usando padrões
+
+case <id>:<Type> => <Expression>
+
+o Math acaba usando o tipo para dar o retorno
+val radius: Any = 10.05
+val typeOfRadius = radius match {
+    case radius:Int => "Integer"
+    case radius:Double => "Double"
+    case radius:String => "String"
+    case _ => "Any"
+}
+O radius interno é uma variável de binding como o "_" e o :<type> é como se fosse o isInstanceOf[<Type>]
+
+val radius:String = "10"
+val typeOfRadius = radius match {
+    case radius:Int => "Integer"
+    case radius:String => "String"
+    case radius:Double => "Double"
+    case _ => "Any"
+}
+<console>:12: error: scrutinee is incompatible with pattern type;
+Se o tipo do radius é definido como :Any ele funciona.
+
+
+Usando o For
+============
+O for pode ser uma expressão ou Statement.
+Se o "for" terminar com yield ele é uma expressão
+Caso contrário é um Statement.
+
+o Yield produz vários retornos.
+val days = List("Seg", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo")
+val x = for (day <- days) yield {
+    day match {
+        // case 10 => "Absurdo" // Erro: Todos os tipos avalidados devem ser coerentes.
+        case "Seg" => "Segunda Maníaca"
+        case otherDay => otherDay
+    }
+}
+x: List[String] = List(Segunda Maníaca, Terça, Quarta, Quinta, Sexta, Sábado, Domingo)
+
+
+Iteradores
+==========
+Em java
+for ( String day : days)
+for ( int i = 0; i < days.size(); i++)
+while (days.hasNext())
+
+Para os 2 primeiros temos equivalentes em Scala
+for ( day <- days) { /*Faz Algo co day*/ }
+for ( i <- 0 to days.size - 1 ) { /*Faz Algo com days(i)*/ }
+[0 to 10]
+
+com o "to" ele vai de 0 até size-1
+Se usar o until ele inicia com o valor e vai até o final menos 1
+for ( i <- 0 until days.size ) { /*Faz Algo com days(i)*/ }
+[0 until 10[
+
+O melhor modo de iterar não é usando o "for".Devemos usar o foreach, map, flatmap.
+
+
+for com filtros (if)
+
+for (day <- days if day == "Segunda") print(day)
+
+val k = (1 to 100)
+for ( i <- k if i % 3 == 0 ) print(i+"-")
+
+Usando "for" com diversos níveis (ou variáveis)
+
+for { i <- 0 until 7 // Segundo nível
+      j <- 0 to 10}  // Executa mais, 1o nível
+      {
+        println(s"$j, $i")
+      }
+
+while e do-while
+================
+
+São statements puros, ou seja, não funcionam com o Yield.
+
+Funções e Métodos
+====================
+Método está atrelado a uma Classe.
+A função é um objeto único no sistema e a colocamos como um objeto de primeira classe.
+
+Exemplo de Método:
+           ======
+def getArea(radius:Double):Double = {
+    val PI = 3.14;
+    PI * radius * radius
+}
+
+Exemplo de uma Função atribuido a uma constante:
+               ======
+val getArea = (radius:Double) => {
+    val PI = 3.14;
+    PI * radius * radius
+}:Double
+
+Cuidado: os métodos tem uma performance maior que as variáveis do tipo função
+
+Os métodos podem ser convertidos em variáveis do tipo função
+
+Métodos : Aceita parâmetros de tipo[] e default values
+Funções : Não aceita nem parãmetros de tipo [] nem valores default
+
+Como funções são vistas como variáveis, não podemos ter métodos com o mesmo nome de variáveis.
+
+Funções tem scopo ampliado (podem ser influenciado por variáveis fora do seu escopo) e é chamado de Closures
+
+Funções
+=======
+val getArea = (side1:Doble, side2:Double) => {side1 * side2}:Double
+val area = getArea(10.0, 11.0)
+Funções são blocos de expressão nomeados e que podem ser reutilizados.
+
+Associando métodos para valores
+===============================
+
+Método: def cicleArea(r:Double):Double = PI * r * r
+
+Não é possível associar métodos diretamente a variáveis
+
+val calcCicleArea = cicleArea // Isso dá erro
+
+val calcCicleArea : (Double) => Double = cicleArea
+// Isso funciona pois o tipo associado é uma função que recebe Double e retorna Double
+
+A outra forma de resolver isso é a "eta expansion"
+val calcCicleAre = cicleArea _
+
+Se tiver 2 ou mais parâmetros como fazer o cast ?
+
+Com o tipo            val x1 : (Double, Double) => Double = getRetangleArea
+Com o "eta expansion" val x1 = getRetangleArea _ // Usa somente 1 "_"
+
+Uso de Tuplas como retorno
+==========================
+Somente pode ser usado por funções, não métodos.
+
+quero um função que dado o perímetro ele retorna o lado e a área.
+
+{
+    val sideOfSquare = perimeter / 4D;
+    (sideOfSquare, sideOfSquare*sideOfSquare) // Retorno da Tupla.
+}
+
+**************************************
+**   Usando tuplas no Scala 2.12.13 **
+**************************************
+
+somente nas variáveis:
+    val t = (10.0,"Hoje")
+
+Acessando os valores
+    t._1 == 10.0
+    t._2 == "Hoje"
+
+Nas funções
+============
+val getCarac = (side:Double) => { (4*side,side*side) } : (Double,Double)
+
+Nos métodos
+============
+def getCarac(side:Double) : (Double, Double) = { return (4*side,side*side) }
+    ou
+def getCarac(side:Double) : (Double, Double) = { (4*side,side*side) }
+
+Não precisa do tupled.... Até agora.
+(getRectangleArea _).tupled()
+
+
+Combinando....
+(getRectangleArea _).tupled({
+                                val sideOfSquare = perimeter / 4D;
+                                (sideOfSquare, sideOfSquare*sideOfSquare) // Retorno da Tupla.
+                            })
+
+=================================================
+
+Usando passagem de valores e valor padrão
+def imprimeDadosRetangulo (l1:Double,l2:Double,imprime:Boolean = true) : (Double,Double) = {
+
+    if (imprime){
+        println(s"Lado1 = $l1, Lado2 = $l2, Area = ${l1*l2}, Perímetro = ${2*l1+2*l2}")
+    }
+    return (l1*l2,2*l1+2*l2)
+}
+
+Para chamar na ordem :
+imprimeDadosRetangulo(10,20)
+Para mudar a ordem dos lados.
+imprimeDadosRetangulo(l2=10,l1=20)
+imprimeDadosRetangulo(l2=10,l1=20,imprime=false)
+
+Segundo o curso esses recursos não funcionam para funções, somente para métodos.
+
+Vamos testar.
+-----------------------------------> Não aceitou esse igual      |
+                                                                 V
+val imprimeDadosRetangulo = (l1:Double,l2:Double,imprime:Boolean = true) =>  {
+    if (imprime){
+        println(s"Lado1 = $l1, Lado2 = $l2, Area = ${l1*l2}, Perímetro = ${2*l1+2*l2}")
+    }
+    return (l1*l2,2*l1+2*l2)
+} : (Double,Double)
+
+----------------------------> ASSIM FUNCIONOU ........
+val imprimeDadosRetangulo = (l1:Double,l2:Double,imprime:Boolean ) =>  {
+    if (imprime){
+        println(s"Lado1 = $l1, Lado2 = $l2, Area = ${l1*l2}, Perímetro = ${2*l1+2*l2}")
+    }
+    (l1*l2,2*l1+2*l2)
+} : (Double,Double)
+
+imprimeDadosRetangulo: (Double, Double, Boolean) => (Double, Double) = $Lambda$7293/0x00000001020f7c40@587b1bbf
+
+
+Chamando o código normal
+imprimeDadosRetangulo(10D,20D,true)
+Funcionou ::
+Lado1 = 10.0, Lado2 = 20.0, Area = 200.0, Perímetro = 60.0
+res29: (Double, Double) = (200.0,60.0)
+Nomeando os parâmetros:
+scala> imprimeDadosRetangulo(l2=10D,l1=20D,imprime=true)
+<console>:13: error: not found: value l2
+imprimeDadosRetangulo(l2=10D,l1=20D,imprime=true)
+                      ^
+<console>:13: error: not found: value l1
+imprimeDadosRetangulo(l2=10D,l1=20D,imprime=true)
+                             ^
+<console>:13: error: not found: value imprime
+imprimeDadosRetangulo(l2=10D,l1=20D,imprime=true)
+                                    ^
+=============>>>>>>> Dá ERRO !!
+Funções não aceitam parâmetros nomeados ou valores padrão.
+
+
+Compondo com Valores padrão e NESTED FUNCTIONS
+def getCicleStats(r:Double, PI:Double = 3.14) : (Double,Double) = {
+
+    def getArea(r:Double) = PI * r * r;
+    def getCircuference(r:Double) = PI * 2.0 * r;
+
+    (getArea(r), getCircuference(r))
+}
+
+val k = getCicleStats(12D)
+
+Os últimos parâmetros não precisam ter o valor default, pode ser os primeiros também.
+
+Compondo com Valores padrão e NESTED FUNCTIONS
+def getCicleStats(PI:Double = 3.14, r:Double) : (Double,Double) = {
+
+    def getArea(r:Double) = PI * r * r;
+    def getCircuference(r:Double) = PI * 2.0 * r;
+
+    (getArea(r), getCircuference(r))
+}
+
+val k = getCicleStats(12D) // Erro, ele pensa que é o PI=12.0 e não atribuiu o r.
+
+val k = getCicleStats(r=12D) // OK !!
+
+Para ler o valor k e distribuílos em variáveis
+val ( c, d ) = k
+c: Double = 452.15999999999997
+d: Double = 75.36
+
+========================================================
+Lidando com listas
+=======================================================
+Lista sem definição de tipo
+***************************
+cala> val someList = 1 :: 2 :: "3" :: "4" :: Nil
+someList: List[Any] = List(1, 2, 3, 4)
+
+scala> someList(0).getClass()
+res37: Class[_] = class java.lang.Integer
+
+scala> someList(1).getClass()
+res38: Class[_] = class java.lang.Integer
+
+scala> someList(2).getClass()
+res39: Class[_] = class java.lang.String
+
+Lista com definição de tipo
+***************************
+
+scala> val someList:List[String] = 1 :: 2 :: "3" :: "4" :: Nil
+<console>:11: error: type mismatch;
+
+Usando o Generics no Scala
+****************************
+Para a criação de objetos
+a = new List[String]("Um")
+a = a ::: List("Dois")
+
+Para chamada de métodos
+def printKeyPair[K,V](k:K, v:V) = {
+    val keyType = k.getClass();
+    val valueType = v.getClass();
+    println ( s"$k. $v, are types $keyType $valueType" );
+}
+
+Os parâmetros K,V que define os tipos valem somente para métodos não para funções.
+Se passar do jeito que está para a função ela troca por Any.
+
+val printPairFn = printKeyPair _
+printPairFn: (Any, Any) => Unit = $Lambda$5677/0x0000000100d21840@6a2491b5
+
+Para definir os tipo podemos atribuir o K,V
+val printPairFn = printKeyPair[Int, String] _
+printPairFn: (Int, String) => Unit = $Lambda$5686/0x0000000100d1c040@5281f94d
+
+Usando o VARARGS
+*****************
+
+1o Forma:
+    ----------------+
+                    |
+                    V
+  def main(args: Array[String]): Unit = { }
+
+2o Forma:
+   ------------------------------+
+                                 |
+                                 V
+  def concatString(strings:String*) = {
+    var buildStringRet = "";
+    for (s <- strings) buildStringRet = buildStringRet + " " + s;
+    buildStringRet;
+  }
+
+concatString("Amanhã", "será", "melhor")
+
+Dá para usar em funções?
+Vamos tentar
+val concat = (strings:Seq[String]) => { var ret = ""; for (s <- strings) ret = ret + s + " "; ret }:String
+
+scala> concat("1", "2", "3")
+<console>:13: error: too many arguments (3) for method apply: (v1: Seq[String])String in trait Function1
+concat("1", "2", "3")
+
+concat(Seq("1", "2", "3"))
+res7: String = "1 2 3 "
+
+Conclusão: Não é possível aplicar a entrada de parâmetros de tamanhos não definidos para uma função
+mesmo que seja a atribuição de um método para uma função.
+
+
+
+
+
+
+
+
+
