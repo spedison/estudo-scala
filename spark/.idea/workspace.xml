@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2fef5767-e1b4-4c2b-89ab-1b4b1d8e3b1a" name="Default Changelist" comment="">
+    <list default="true" id="2fef5767-e1b4-4c2b-89ab-1b4b1d8e3b1a" name="Default Changelist" comment="Adicionando o projeto com Spark">
       <change afterPath="$PROJECT_DIR$/../breeze/.idea/checkstyle-idea.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../breeze/.idea/codeStyles/Project.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../breeze/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
@@ -212,6 +212,14 @@
       <option name="presentableId" value="Default" />
       <updated>1619695506429</updated>
     </task>
+    <task id="LOCAL-00001" summary="Adicionando o projeto com Spark">
+      <created>1619695982198</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1619695982198</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -224,5 +232,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Adicionando o projeto com Spark" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionando o projeto com Spark" />
   </component>
 </project>
