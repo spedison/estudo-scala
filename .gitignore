@@ -1,2 +1,6 @@
 *.class
 *.log
+excel/target/scala-2.12/update/update_cache_2.12/output
+excel/target/streams/_global/dependencyPositions/_global/streams/update_cache_2.12/input_dsp
+excel/target/streams/_global/dependencyPositions/_global/streams/update_cache_2.12/output_dsp
+excel/target/streams/_global/updateClassifiers/_global/streams/update_cache_2.12/output

@@ -494,6 +494,9 @@ Conclusão: Não é possível aplicar a entrada de parâmetros de tamanhos não 
 mesmo que seja a atribuição de um método para uma função.
 
 
+var arr1 : Array [Long] = Array(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 10L, 15L, 20L, 30L, 45L, 49L)
+matematica.problem1202.Main.buscaPrimeiraMenorLong(17L, arr1)
+
 
 
 

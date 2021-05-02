@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2fef5767-e1b4-4c2b-89ab-1b4b1d8e3b1a" name="Default Changelist" comment="Adicionando o projeto com Spark">
-      <change afterPath="$PROJECT_DIR$/../breeze/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../breeze/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../breeze/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../arquivos/entrada1202" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../breeze/.idea/modules/breeze-build.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../breeze/.idea/modules/breeze.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../breeze/project/build.properties" afterDir="false" />
@@ -56,22 +54,6 @@
       <change afterPath="$PROJECT_DIR$/../breeze/target/streams/compile/unmanagedClasspath/_global/streams/out" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../breeze/target/streams/runtime/unmanagedClasspath/_global/streams/out" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../breeze/target/streams/test/unmanagedClasspath/_global/streams/out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.bsp/sbt.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_lang_scala_library_2_12_13_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/spark-build.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/spark.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sbt.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/build.properties" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/project/target/config-classes/$419bcd28fd1170234b8a.cache" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/project/target/config-classes/$936098f405cd9303e791.cache" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/project/target/config-classes/$9bd8c808e83dfb3dc59c.cache" afterDir="false" />
@@ -152,15 +134,14 @@
       <change afterPath="$PROJECT_DIR$/target/streams/test/unmanagedClasspath/_global/streams/export" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/target/streams/test/unmanagedClasspath/_global/streams/out" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/target/streams/test/unmanagedJars/_global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../breeze/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../breeze/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../breeze/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../breeze/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../breeze/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/../breeze/build.sbt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../urionlinejudge-in-scala/src/main/scala/matematica/problem1202/Main.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../urionlinejudge-in-scala/src/main/scala/matematica/problem1202/MainSlow.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../urionlinejudge-in-scala/src/test/scala/matematica/Problem1202.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../excel/target/scala-2.12/update/update_cache_2.12/output" beforeDir="false" afterPath="$PROJECT_DIR$/../excel/target/scala-2.12/update/update_cache_2.12/output" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../excel/target/streams/_global/dependencyPositions/_global/streams/update_cache_2.12/input_dsp" beforeDir="false" afterPath="$PROJECT_DIR$/../excel/target/streams/_global/dependencyPositions/_global/streams/update_cache_2.12/input_dsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../excel/target/streams/_global/dependencyPositions/_global/streams/update_cache_2.12/output_dsp" beforeDir="false" afterPath="$PROJECT_DIR$/../excel/target/streams/_global/dependencyPositions/_global/streams/update_cache_2.12/output_dsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../excel/target/streams/_global/updateClassifiers/_global/streams/update_cache_2.12/output" beforeDir="false" afterPath="$PROJECT_DIR$/../excel/target/streams/_global/updateClassifiers/_global/streams/update_cache_2.12/output" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../urionlinejudge-in-scala/.idea/libraries/sbt__com_github_virtuald_curvesapi_1_04_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../urionlinejudge-in-scala/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/../urionlinejudge-in-scala/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../urionlinejudge-in-scala/src/main/scala/excel/learquivo/Main.scala" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -219,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619695982198</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Adicionando o projeto com Spark">
+      <created>1619696045338</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1619696045338</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -232,6 +220,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adicionando o projeto com Spark" />
