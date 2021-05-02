@@ -1,0 +1,5 @@
+package problemXXXX
+
+class Main {
+
+}
