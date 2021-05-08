@@ -499,6 +499,412 @@ matematica.problem1202.Main.buscaPrimeiraMenorLong(17L, arr1)
 
 
 
+Funções anônimas são trechos de código atribuidas a uma variável
+
+val soma2f = (v1:Int)  =>  { v1 + 2 } : Int
+def soma2def (v1:Int : Int = { v1 + 2 }
+
+Notação de Placeholder
+=============================
+
+Usada para funções anônimas "locais"
+
+val someNumbers = List(10,20,30,40,70)
+someNumbers.filter(_ > 35)
+
+Notação Longa
+def isSpecialName(firstName:String , lastNane:String): Boolean = {
+    firstName == "Edison" && lastName == "Araujo"
+}
+
+isVip ("Edison", "Araujo", isSpecialName)
+
+Ou Usando a notação de placeholder
+
+Este trecho é uma função anônima passada como parâmetro
+-----------------------------------+
+                                   |
+                                   V
+                           /-------------------------\
+isVip ("Edison", "Araujo", _ == "Edison" && _ "Araujo")
+
+// Convertendo métodos em funções usando Placeholder sintax.
+def compareStrAsc(s1: String, s2: String): Int = {
+  if (s1 == s2) 0
+  else if (s1 < s2) -1
+  else 1
+}
+// Placeholrder Sintax com os tipos especificados.
+val comparaPlaceHolder = compara(_:String, _:String, compareStrAsc) // Ele pega os parâmetros passados e repassa na orderm para a função
+
+println("Comparando A e B ==> " + comparaPlaceHolder("A","B"))
+// ComparaPlaceHolder = É uma função parcialmente aplicada.
+
+
+Curryng
+Envio de funções para funções para complementar a notação de placeholder.
+def curriedCompare(cmpFn:(String,String)=>Int) (s1:String,s2:String) : Int = {
+    cmpFn(s1,s2)
+}
+
+curriedCompare(compareStrAsc)("Edison","Alessandra")
+
+
+
+:::::::By-Name Parameter:::::::
+Usar com muito cuidado pois é uma função "Lazy"
+
+Sem usar o By-Name
+---------------------
+
+def calculaNome (nome:String):Int = { println("Entrei calculaNome") ; nome.length }
+
+def usaNome (nome:String, tam : Int) : Unit = { println("Entrei usaNome"); println(f"nome = $nome e tamanho = $tam") ; println(f"nome = $nome e tamanho = $tam") }
+
+Chamando
+val s1 =  "Edison"
+usaNome (s1, calculaNome(s1) )
+:::Resultado:::
+Entrei calculaNome
+Entrei usaNome
+nome = Edison e tamanho = 6
+nome = Edison e tamanho = 6
+
+
+Usando o By-Name
+---------------------------
+
+def calculaNome (nome:String):Int = { println("Entrei calculaNome") ; nome.length }
+
+def usaNome (nome:String, tam : => Int) : Unit = { println("Entrei usaNome"); println(f"nome = $nome e tamanho = $tam") ; println(f"nome = $nome e tamanho = $tam") }
+
+val s1 =  "Edison"
+usaNome (s1, calculaNome(s1) )
+::::: Resultado ::::::::
+Entrei usaNome
+Entrei calculaNome
+nome = Edison e tamanho = 6
+Entrei calculaNome
+nome = Edison e tamanho = 6
+
+:::::: Outro jeito de concatenar essa forma de pensar ::::
+
+def whileLoop(condition: => Boolean)(body: => Unit): Unit =
+  if (condition) {
+    body
+    whileLoop(condition)(body)
+  }
+
+var i = 2
+        // Essa condição sempre é chamada dentro do whileloop. Lazy funciontion.
+         ----+
+             |
+          /-----\
+whileLoop (i > 0) { // Esse "corpo é chamado no Body !"
+  println(i)
+  i -= 1
+}  // prints 2 1
+
+--------------------------------------------------
+----------- Closures  ----------------------------
+--------------------------------------------------
+* Aplicado para funções e métodos.
+* São Funções dentro dos métodos. Ou nested function.
+* Podem acessar variáveis externas.
+* Encapsulam dentro um "ambiente" as variáveis que precisam.
+
+var factor = 3
+val multiplier = (i:Int) => i * factor
+
+def greeting(lang: String) = {
+  val currDate = Calendar.getInstance().getTime().toString
+  lang match {
+    case "Portuguese" => (x: String) => println("Ola " + x + ". It is " + currDate)
+    case "English" => (x: String) => println("Hello " + x + ". It is " + currDate)
+    case "Hindi" => (x: String) => println("Namaste " + x + ". It is " + currDate)
+    case "French" => (x: String) => println("Bomjour " + x + ". It is " + currDate)
+    case "Spanish" => (x: String) => println("Hola " + x + ". It is " + currDate)
+  }
+}
+print("SAUDAÇÃO: ")
+
+// Este é um Closure.
+// É uma função.
+// AS variáveis que ele usa, ele encapsula e cria um ambiente para chamar isoladamente depois.
+val portHello = greeting("Portuguese")
+val engHello = greeting("English")
+
+portHello("Edison")
+engHello("Edison")
+:::Resultado:::
+Ola Edison. It is Sat May 08 12:03:16 BRT 2021
+Hello Edison. It is Sat May 08 12:03:16 BRT 2021
+
+Os closures são tão importantes porque eles podem além de evitar Bugs, pois tem um
+processamento mais "isolado" eles podem ser distribuidos em diferentes nós de um cluster.
+
+
+
+===================================
+===        Tuplas       ===========
+===================================
+
+* Conjunto de valores ordenados
+* Pode ser de tipos diferentes
+
+Exemplo: val funcionario = ("Edison", "Araujo", 44, "M", new Date(12,10,1976))
+O tipo é (String,String,Int,Date)
+
+Se for pares podem ser criados com a notação "->" (Notação especial)
+
+// Compra de 10 paes.
+val compra = "Pao" -> 10
+O tipo é (String,Int)
+
+---> Acessando a Tupla.
+/// Item a item
+println(compra._1) // Resultado "Pao"
+println(compra._2) // Resultado 10
+
+// Colocando todos os itens em cada variável
+val (item, quantidade) = compra
+
+// Se quiser pular algum elemento da tupla, pode usar o "_"
+val (_, quantidade) = compra
+
+Notação "awkward" :: Desajeitada, estranha
+Usando foreach
+
+compra.productIterator.foreach(i => println("Valor - " + i ))
+::: RESULTADO ::::
+Valor = Pao
+Valor = 10
+
+para exibir quantos itens tem:
+compra.productArity
+:::: RESULTADO ::::
+res2: Int = 2
+
+Para passar as tuplas para funções.
+Jeito "clunky" "desajeitado"
+
+//Montando a tupla
+val person = "Edison" -> "M"
+// Função que recebe os parâmetros na mesma ordem da tupla.
+def printPerson ( name:String, gender:String) = println(s"Name=$name M/F=$gender")
+// Convertendo o método para uma função e passando a tupla usando o "tupled"
+(printPerson _).tupled(person)
+
+::: RESULTADO :::
+Name=Edison M/F=M
+
+Detalhe técnico:
+Tuplas não são listas e não derivam de Iterable.
+Tuplas derivam das Traits Tuple1, Tuple2, Tuple3...
+Tuplas são IMUTÁVEIS.
+
+
+=================================
+============ Listas =============
+=================================
+
+---Detalhes técnicos.---
+List é uma lista ligada
+O último elemento é chamado de Nil
+Uma lista vazia é List[Nothing]
+Para criar listas podemos usar o operador "cons" "::" e o valor especial Nil.
+A ordem é mantida.
+
+>>>> 2 formas de criar listas: <<<<
+val diasSemana1 = "Seg" :: "Ter" :: "Qua" :: "Qui" :: "Sex" :: "Sab" :: "Dom" :: Nil
+val diasSemana2 : List[String] = List("Seg" , "Ter" , "Qua" , "Qui" , "Sex" , "Sab" , "Dom")
+
+>>>>> Concatenando duas ou mais listas <<<
+-------------------------------------------
+val duasSemanas = diasSemana1 ::: diasSemana2
+duasSemanas: List[String] = List(Seg, Ter, Qua, Qui, Sex, Sab, Dom, Seg, Ter, Qua, Qui, Sex, Sab, Dom)
+
+    -- ou --
+
+val duasSemanas = diasSemana1 ++ diasSemana2
+duasSemanas: List[String] = List(Seg, Ter, Qua, Qui, Sex, Sab, Dom, Seg, Ter, Qua, Qui, Sex, Sab, Dom)
+
+Operadores
+        ":::" -> Somente pode ser usados por listas
+        "++"  -> É usando por objetos do tipo "Traversable".
+
+>>>>> Invertendo sem inverter ????
+
+// Lista com uma pequena diferenciação ;-)
+scala> var listaTmp = diasSemana1.map(_ + " 1")
+listaTmp: List[String] = List(Seg 1, Ter 1, Qua 1, Qui 1, Sex 1, Sab 1, Dom 1) // Para distinguir
+
+// Concatenando normal.
+scala> listaTmp ::: diasSemana2
+res34: List[String] = List(Seg 1, Ter 1, Qua 1, Qui 1, Sex 1, Sab 1, Dom 1, Seg, Ter, Qua, Qui, Sex, Sab, Dom)
+                           *****
+// Concatenando na mesma ordem, porem invertido
+scala> listaTmp .::: (diasSemana2)
+res36: List[String] = List(Seg, Ter, Qua, Qui, Sex, Sab, Dom, Seg 1, Ter 1, Qua 1, Qui 1, Sex 1, Sab 1, Dom 1)
+                                                              *****
+
+
+
+
+Usando o Zip que é o processo de unir 2 listas de forma estuturada.
+
+val diasSemana3 = "Seg" :: "Ter" :: "Qua" :: "Qui" :: "Sex" :: "Sab" :: "Dom" :: Nil
+val diasSemanaNum = 1 :: 2 :: 3 :: 4 :: 5 :: 6 :: 7 :: Nil
+
+val diasSemanaZipped = diasSemana3 zip diasSemanaNum
+diasSemanaZipped: List[(String, Int)] = List((Seg,1), (Ter,2), (Qua,3), (Qui,4), (Sex,5), (Sab,6), (Dom,7))
+(String,Int)
+
+    -- ou --
+
+val diasSemanaZipped =  diasSemanaNum zip diasSemana3
+diasSemanaZipped: List[(Int, String)] = List((1,Seg), (2,Ter), (3,Qua), (4,Qui), (5,Sex), (6,Sab), (7,Dom))
+(Int,String)
+
+
+// Listas de Listas.
+val duasSemanas = List(diasSemana1 , diasSemana2)
+::: RESULTADO ::: duasSemnas: List[List[String]] = List(List(Seg, Ter, Qua, Qui, Sex, Sab, Dom), List(Seg, Ter, Qua, Qui, Sex, Sab, Dom))
+
+// Convertendo todos os elementos da Lista de Listas em uma única lista sequencial
+val duasSemanas = List(diasSemana1 , diasSemana2).flatten
+duasSemanas: List[String] = List(Seg, Ter, Qua, Qui, Sex, Sab, Dom, Seg, Ter, Qua, Qui, Sex, Sab, Dom)
+
+// Pegando somente os elementos únicos.
+val duasSemanas = List(diasSemana1 , diasSemana2).flatten.distinct
+duasSemanas: List[String] = List(Seg, Ter, Qua, Qui, Sex, Sab, Dom)
+
+>>>>>>> Dado uma lista o método .head retorna o primeiro elemento e
+>>>>>            o .tail retorna uma lista sem o primeiro elemento.
+
+scala> duasSemanas.head
+res4: String = Seg
+
+scala> duasSemanas.tail
+res5: List[String] = List(Ter, Qua, Qui, Sex, Sab, Dom)
+
+>>>> Tamanho da lista
+
+scala> duasSemanas.size
+res6: Int = 7
+
+>>>>> Invertendo a ordem da lista.
+
+scala> duasSemanas.reverse
+res7: List[String] = List(Dom, Sab, Sex, Qui, Qua, Ter, Seg)
+
+
+>>>>>> Verifica se existe ou não um elemento. (infix dot notation)
+scala> duasSemanas.contains("Ter")
+res8: Boolean = true
+
+scala> duasSemanas.contains("ter")
+res9: Boolean = false
+
+     --- Ou usando a notação de operação ---
+
+scala> duasSemanas contains "ter"
+res10: Boolean = false
+
+scala> duasSemanas contains "Seg"
+res11: Boolean = true
+
+>>>> Fazendo um "for" com uma lista é bem simples.
+for (c <- duasSemanas ) println (c)
+:::RESULTADO:::
+Seg
+Ter
+Qua
+Qui
+Sex
+Sab
+Dom
+
+>>>> Outra forma usando o WHILE ... Podemos usar o While, mas temos que ter cuidado para alterar a lista.
+val duasSemanas = List("Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom")
+var restoDaSemana = duasSemanas
+// while (restoDaSemana != Nil ) { // Ou
+while (! restoDaSemana.isEmpty ) {
+  println(s"Hoje é ${restoDaSemana.head}, temos ${restoDaSemana.size} para o fim de semana")
+  restoDaSemana = restoDaSemana.tail
+}
+
+
+>>>>> Para retornar uma nova lista sem os primmeiros elementos
+  (Infix dot Notation)
+scala> duasSemanas drop 2
+res16: List[String] = List(Qua, Qui, Sex, Sab, Dom)
+
+     -- OU ---
+  (Simple notation)
+scala> duasSemanas.drop(3)
+res17: List[String] = List(Qui, Sex, Sab, Dom)
+
+>>>> Para pegar um conjunto específico de elementos.
+>>>>>>>   (Início em 0 e não pega o último. No exemplo pela o terceiro e quarto elemento.)
+
+scala> duasSemanas slice (2,4)
+res18: List[String] = List(Qua, Qui)
+
+
+>>>>> Separar uma lista em 2 outras listas.
+
+scala> duasSemanas splitAt 3
+res21: (List[String], List[String]) = (List(Seg, Ter, Qua),List(Qui, Sex, Sab, Dom))
+// No exemplo o local do corte é a quantidade de elementos da 1o lista.
+
+
+>>>>>> Pega uma nova lista iniciando no Head e definindo a quantidade de elementos
+
+scala> duasSemanas take 4
+res22: List[String] = List(Seg, Ter, Qua, Qui)
+
+
+>>>>>>> Para Ordenar a lista
+
+scala> duasSemanas sorted
+warning: one feature warning; for details, enable `:setting -feature' or `:replay -feature'
+res23: List[String] = List(Dom, Qua, Qui, Sab, Seg, Sex, Ter)
+
+      --- OU ---
+
+scala> duasSemanas.sorted
+res24: List[String] = List(Dom, Qua, Qui, Sab, Seg, Sex, Ter)
+
+
+A parte interessante... Dado uma lista de inteiros.
+
+scala> val listaNumeros = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 11, 12, 13, 14, 16, -10, -30)
+listaNumeros: List[Int] = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 11, 12, 13, 14, 16, -10, -30)
+
+scala> listaNumeros.sum
+res27: Int = 90
+
+scala> listaNumeros.product
+res29: Int = -23199744
+
+scala> listaNumeros.max
+res31: Int = 16
+
+scala> listaNumeros.min
+res32: Int = -30
+
+>>>>>>>>>>>>>>>>>>>>>>>> Detalhes da lista <<<<<<<<<<<<<<<<<<
+* Nil é um singleton, tipo de List[Nothing]
+* Nil é um valor especial usando para listas como None é usado para Options
+* As listas são implementas como Linked Lists terminadas com Nil.
+
+
+
+
+
+
+
 
 
 
